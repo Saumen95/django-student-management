@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Note
+from .models import Note, Category
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,9 +13,18 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name']
 
 class NoteSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
+    category_id  = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(), source='category', write_only=True)
     class Meta:
         model = Note
-        fields = ['id', 'title', 'content', 'created_at', 'author']
-        extra_kwargs = {'author': {'read_only': True}}
+        fields = ['id', 'title', 'content', 'created_at','category', 'author']
+
+
+
+
