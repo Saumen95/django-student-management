@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "sharing",
     "rest_framework",
     "corsheaders",
+    "channels",
     'django_filters',
 ]
 
@@ -97,6 +98,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
+ASGI_APPLICATION = 'backend.asgi.application'
 
 
 # Database
