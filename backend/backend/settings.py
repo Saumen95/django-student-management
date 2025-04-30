@@ -34,6 +34,8 @@ ALLOWED_HOSTS = ["*"]
 
 # Rest Framework_config
 REST_FRAMEWORK = {
+
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
@@ -62,6 +64,7 @@ INSTALLED_APPS = [
     "api",
     "rest_framework",
     "corsheaders",
+    'django_filters',
 ]
 
 MIDDLEWARE = [
