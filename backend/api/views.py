@@ -1,14 +1,18 @@
 from django.shortcuts import render
 from rest_framework import generics
 from .serializers import UserSerializer, NoteSerializer, CategorySerializer
+from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import Note, Category
+from .filters import NoteFilter
 
 
 class CreateNoteView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = NoteSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = NoteFilter
 
     def get_queryset(self):
         user = self.request.user
