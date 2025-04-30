@@ -27,4 +27,6 @@ urlpatterns = [
     path('api/auth/', include('rest_framework.urls')),
     path('api/', include('api.urls')),
     path('sharing/', include('sharing.urls')),
+    path('api/user-analytics/', include('useranalytics.urls')),
+
 ]

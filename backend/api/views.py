@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import Note, Category
 from .filters import NoteFilter
+from useranalytics.models import ActivityLog
 
 
 class CreateNoteView(generics.ListCreateAPIView):
@@ -20,7 +21,14 @@ class CreateNoteView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            serializer.save(author=self.request.user)
+            note = serializer.save(author=self.request.user)
+            # Log the creation of the note
+            ActivityLog.objects.create(
+                user=self.request.user,
+                action_type='CREATE',
+                status='SUCCESS',
+                remarks=f"Note '{note.title}' created"
+            )
         else:
             print(serializer.errors)
 
