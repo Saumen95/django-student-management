@@ -7,6 +7,16 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import Note, Category
 from .filters import NoteFilter
 from useranalytics.models import ActivityLog
+from dal import autocomplete
+
+
+
+class NoteAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Note.objects.all()
+        if self.q:
+            qs = qs.filter(title__icontains=self.q)
+        return qs
 
 
 class CreateNoteView(generics.ListCreateAPIView):
