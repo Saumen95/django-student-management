@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "channels",
     'django_filters',
+    'dal',
+    'dal_select2',
 ]
 
 MIDDLEWARE = [
